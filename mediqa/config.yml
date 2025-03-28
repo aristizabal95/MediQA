@@ -1,0 +1,7 @@
+# Data Configuration
+eval_src_file: "intern_screening_dataset.csv"
+split_frac: 0.5
+val_file: "val.csv"
+test_file: "test.csv"
+
+model_name: "nan"
