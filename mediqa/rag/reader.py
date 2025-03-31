@@ -27,7 +27,7 @@ class Reader:
         self.config = config
         
         bnb_config = None
-        if config["quantize"]:
+        if config.quantize:
             bnb_config = BitsAndBytesConfig(
                 load_in_4bit=True,
                 bnb_4bit_use_double_quant=True,
@@ -56,14 +56,14 @@ class Reader:
             add_generation_prompt=True,
         )
 
-    def generate(self, questions_batch: List[str], retrieved_docs_batch: List[List[str]]) -> List[str]:
+    def generate(self, questions_batch: List[str], retrieval_batch: List[List[str]]) -> List[str]:
         # Construct the batched context
-        assert len(questions_batch) == len(retrieved_docs), "Batch size is not consistent for questions and context"
+        assert len(questions_batch) == len(retrieval_batch), "Batch size is not consistent for questions and context"
         final_prompt_batch = []
-        for question, retrieved_docs in zip(questions_batch, retrieved_docs_batch):
-            retrieved_docs_text = [doc.page_content for doc in retrieved_docs]
+        for question, retrieval in zip(questions_batch, retrieval_batch):
+            retrieval_text = retrieval["documents"][0]
             context = "\nExtracted documents:\n"
-            context += "".join([f"Document {str(i)}:::\n" + doc for i, doc in enumerate(retrieved_docs_text)])
+            context += "".join([f"Document {str(i)}:::\n" + doc for i, doc in enumerate(retrieval_text)])
 
             final_prompt = self.RAG_prompt_template.format(question=question, context=context)
             final_prompt_batch.append(final_prompt)
