@@ -3,5 +3,23 @@ eval_src_file: "intern_screening_dataset.csv"
 split_frac: 0.5
 val_file: "val.csv"
 test_file: "test.csv"
+knowledge_dset: "gamino/wiki_medical_terms"
+knowledge_path: sources
 
-model_name: "nan"
+# RAG Configuration
+embedding_dimension: 256
+index_name: "medical_terms"
+encoder_name: "jinaai/jina-embeddings-v2-small-en"
+chunk_size: 1000
+batch_size: 32
+encoding_strategy: "semantic"
+db_location: "tmp/chromadb"
+n_results: 5
+
+# Reader Configuration
+model_name: "Test"
+quantize: true
+temperature: 0.2
+repetition_penalty: 1.1
+do_sample: true
+max_new_tokens: 1000

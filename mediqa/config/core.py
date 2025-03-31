@@ -16,14 +16,33 @@ class DataConfig(BaseModel):
     split_frac: float
     val_file: str
     test_file: str
+    knowledge_dset: str
+    knowledge_path: str
 
-class ModelConfig(BaseModel):
+class ReaderConfig(BaseModel):
     model_name: str
+    quantize: bool
+    temperature: float
+    do_sample: bool
+    repetition_penalty: float
+    max_new_tokens: int
+
+class RAGConfig(BaseModel):
+    embedding_dimension: int
+    index_name: str
+    encoder_name: str
+    chunk_size: int
+    batch_size: int
+    encoding_strategy: str
+    db_location: str
+    n_results: int
+    knowledge_path: str
 
 class Config(BaseModel):
     """Master config object."""
-    data_conf: DataConfig
-    model_conf: ModelConfig
+    data_config: DataConfig
+    reader_config: ReaderConfig
+    rag_config: RAGConfig
 
 def find_config_file() -> Path:
     if CONFIG_FILE_PATH.is_file():
@@ -46,8 +65,9 @@ def create_and_validate_config(parsed_config: YAML = None) -> Config:
         parsed_config = fetch_config_from_yaml()
 
     _config = Config(
-        data_conf=DataConfig(**parsed_config.data),
-        model_conf=ModelConfig(**parsed_config.data),
+        data_config=DataConfig(**parsed_config.data),
+        reader_config=ReaderConfig(**parsed_config.data),
+        rag_config=RAGConfig(**parsed_config.data),
     )
 
     return _config

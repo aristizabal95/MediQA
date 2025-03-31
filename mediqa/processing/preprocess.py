@@ -24,7 +24,7 @@ def cleanup(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-def split(df: pd.DataFrame, frac=0.5) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def split(df: pd.DataFrame, frac=0.5, seed=0) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """Splits the dataset into validation and test sets.
 
     Args:
@@ -34,7 +34,7 @@ def split(df: pd.DataFrame, frac=0.5) -> Tuple[pd.DataFrame, pd.DataFrame]:
         Tuple[pd.DataFrame, pd.DataFrame]: Train and test datasets.
     """
     # Split the dataset into val and test sets
-    train_df = df.sample(frac=frac, random_state=42)
+    train_df = df.sample(frac=frac, random_state=seed)
     test_df = df.drop(train_df.index)
 
     return train_df, test_df
@@ -66,7 +66,7 @@ def preprocess(data_config: DataConfig) -> None:
 
 if __name__ == "__main__":
     # Load the configuration
-    data_config = config.data_conf
+    data_config = config.data_config
 
     # Preprocess the dataset
     preprocess(data_config)
