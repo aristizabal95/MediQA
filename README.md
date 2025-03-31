@@ -1,6 +1,9 @@
 # MediQA
 A medical assistant to answer all of your medic-related questions
 
+<center><img src="assets/mediqa_demo.png" alt="MediQA Demo"></center>
+
+
 MediQA is a completely local Medical Question Answering program that allows users to get answers to their health-related questions. It uses Local LLMs behind the scenes, powered by Retrieval-Augmented Generation frameworks to improve answer accuracy and quality. 
 
 ## How it works:
@@ -48,4 +51,5 @@ The following are some suggestions to further improve the project and performanc
 - **Obtain more documents for RAG**: This project makes use of a single source of truth for populating the vector database. While this might be sufficient, spending some effort for finding additional sources that may complement the ones already being used can increase model performance.
 - **Streaming model responses**: Most people are accostumed to interacting with a Large Language Model with response streaming. This is often useful because responses can often take a long time to generate in its entirety. Streaming responses is a simple way of improving user experience.
 - **Provide options for using hosted models**: While privacy was discussed previously, it would be ideal to leave this as a configuration option rather than a hardcoded functionality of the program. If users feel okay with sharing their data with third-party services, and want to have the increased performance that services such as ChatGPT may provide, it should be easy for them to modify the `config.yml` to include their service details.
-- **Include additional vector database adapters**: In this project only a single adapter was provided for ChromaDB. This means that if an user wants to deploy their own solution, they have to either use ChromaDB or provide their own adapter. *Embed Anything* already provides several examples for different adapters, so it could be easy to adjust them to owr API and increase the number of options users have when deploying the app.
+- **Include additional vector database adapters**: In this project only a single adapter was provided for ChromaDB. This means that if an user wants to deploy their own solution, they have to either use ChromaDB or provide their own adapter. *Embed Anything* already provides several examples for different adapters, so it could be easy to adjust them to owr API and increase the number of options users have when deploying the app. Some popular options could be PineCone or ElasticSearch.
+- **Allow for conversation memory & multi-message queries**: The current implementation only takes into account the latest user message to respond. This means that follow-up questions will not be understood by the system. While this is okay for the purposes of this exercise, allowing for multi-message conversations would be a must for a system like this, more so given that the provided UI looks like a chat platform, which intuitively would lead users to think that follow-up questions are allowed.
