@@ -17,6 +17,7 @@ dependencies = [
     "numpy>=2.2.4",
     "pandas>=2.2.3",
     "pydantic>=2.11.0",
+    "streamlit>=1.44.0",
     "strictyaml>=1.7.3",
     "torch>=2.6.0",
     "transformers>=4.50.3",
@@ -33,3 +34,8 @@ dev = [
     "sentencepiece>=0.2.0",
     "tqdm>=4.67.1",
 ]
+
+
+
+[tool.setuptools]
+packages = ["mediqa"]

@@ -1,0 +1,21 @@
+services:
+  api:
+    image: aristizabal95/mediqa
+    build: .
+    ports:
+    - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+  frontend:
+    image: aristizabal95/mediqa
+    build: .
+    ports:
+    - "8081:8081"
+    environment:
+    - MEDIQA_API_URL=http://api:8080
+    command: ["streamlit", "run", "mediqa/webui.py", "--server.address=0.0.0.0", "--server.port=8081"]
